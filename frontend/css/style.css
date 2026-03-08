@@ -1,0 +1,89 @@
+/* PAGE BACKGROUND */
+
+body{
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg,#667eea,#764ba2);
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+
+/* CARD CONTAINER */
+
+.card{
+    background:white;
+    padding:40px;
+    border-radius:12px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.2);
+    text-align:center;
+    width:300px;
+}
+
+
+/* HEADINGS */
+
+h1,h2{
+    margin-bottom:20px;
+}
+
+
+/* INPUT FIELDS */
+
+input{
+    width:100%;
+    padding:10px;
+    margin:10px 0;
+    border-radius:6px;
+    border:1px solid #ccc;
+    font-size:14px;
+}
+
+
+/* BUTTONS */
+
+button{
+    padding:10px 20px;
+    border:none;
+    border-radius:6px;
+    background:#667eea;
+    color:white;
+    font-size:14px;
+    cursor:pointer;
+    margin-top:10px;
+}
+
+button:hover{
+    background:#5563c1;
+}
+
+
+/* DASHBOARD AREA */
+
+.dashboard{
+    text-align:center;
+    color:white;
+}
+
+
+/* QR IMAGE */
+
+#qr{
+    margin-top:20px;
+}
+
+
+/* TABLE STYLE */
+
+table{
+    border-collapse:collapse;
+    background:white;
+    color:black;
+}
+
+th,td{
+    padding:10px;
+    border:1px solid #ccc;
+}

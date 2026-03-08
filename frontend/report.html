@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Attendance Report</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#f4f6f9;
+}
+
+table{
+border-collapse:collapse;
+width:90%;
+margin:auto;
+background:white;
+}
+
+th,td{
+padding:10px;
+border:1px solid #ccc;
+text-align:center;
+}
+
+th{
+background:#3498db;
+color:white;
+}
+
+h2{
+text-align:center;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h2>Attendance Report</h2>
+
+<table id="table">
+
+<tr>
+<th>Name</th>
+<th>Roll</th>
+<th>Division</th>
+<th>Lecture</th>
+<th>Time</th>
+</tr>
+
+</table>
+
+<script>
+
+async function loadReport(){
+
+let res=await fetch("http://127.0.0.1:5000/attendance_data")
+
+let data=await res.json()
+
+let table=document.getElementById("table")
+
+data.forEach(r=>{
+
+let row=table.insertRow()
+
+row.insertCell(0).innerText=r.Name
+row.insertCell(1).innerText=r.Roll
+row.insertCell(2).innerText=r.Division
+row.insertCell(3).innerText=r.Lecture
+row.insertCell(4).innerText=r.Time
+
+})
+
+}
+
+loadReport()
+
+</script>
+
+</body>
+</html>

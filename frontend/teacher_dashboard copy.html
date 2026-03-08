@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Teacher Dashboard</title>
+<link rel="stylesheet" href="css/style.css">
+<script src="js/script.js"></script>
+<style>
+
+body{
+font-family:Arial;
+margin:40px;
+background:#f5f5f5;
+}
+
+h2{
+color:#333;
+}
+
+.box{
+background:white;
+padding:20px;
+margin-bottom:30px;
+border-radius:8px;
+box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:15px;
+}
+
+th,td{
+border:1px solid #ddd;
+padding:8px;
+text-align:center;
+}
+
+th{
+background:#f0f0f0;
+}
+
+button{
+padding:8px 15px;
+margin-top:10px;
+cursor:pointer;
+}
+
+img{
+margin-top:15px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h2>Teacher Dashboard</h2>
+
+<!-- START ATTENDANCE -->
+
+<div class="box">
+
+<h3>Start Attendance</h3>
+
+<label>Division</label>
+
+<select id="division">
+
+<option value="A">Division A</option>
+<option value="B">Division B</option>
+<option value="C">Division C</option>
+
+</select>
+
+<br><br>
+
+<label>Lecture Number</label>
+
+<select id="lecture">
+
+<option value="1">Lecture 1</option>
+<option value="2">Lecture 2</option>
+<option value="3">Lecture 3</option>
+<option value="4">Lecture 4</option>
+<option value="5">Lecture 5</option>
+
+</select>
+
+<br><br>
+
+<button onclick="startAttendance()">Start Attendance</button>
+
+<button onclick="stopAttendance()">Stop Attendance</button>
+
+<h3 id="lecture_name"></h3>
+
+<img id="qr" width="200">
+
+</div>
+
+<!-- VIEW ATTENDANCE -->
+
+<div class="box">
+
+<h3>View Attendance</h3>
+
+<label>Select Division</label>
+
+<select id="division_view">
+
+<option value="A">Division A</option>
+<option value="B">Division B</option>
+<option value="C">Division C</option>
+
+</select>
+
+<button onclick="loadAttendance()">Load Attendance</button>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Name</th>
+<th>Roll</th>
+<th>Subject</th>
+<th>Lecture</th>
+<th>Date</th>
+<th>Time</th>
+
+</tr>
+
+</thead>
+
+<tbody id="attendance_table"></tbody>
+
+</table>
+
+</div>
+
+</body>
+
+</html>
