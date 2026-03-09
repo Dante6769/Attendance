@@ -7,18 +7,19 @@ from io import BytesIO
 import os
 
 app = Flask(__name__)
+
+# Replace "*" with your frontend URL after deployment for security
 CORS(app, resources={r"/*": {"origins": "*"}})
 
-students_file = "../excel_data/students.xlsx"
-teachers_file = "../excel_data/teachers.xlsx"
-attendance_file = "../excel_data/attendance.xlsx"
+students_file = "data/students.xlsx"     # moved to 'data' folder
+teachers_file = "data/teachers.xlsx"
+attendance_file = "data/attendance.xlsx"
 
 SESSION = {}
 
 # -------------------------
 # TEACHER LOGIN
 # -------------------------
-
 @app.route("/teacher_login", methods=["POST"])
 def teacher_login():
     data = request.json
@@ -40,7 +41,6 @@ def teacher_login():
 # -------------------------
 # START SESSION
 # -------------------------
-
 @app.route("/start_session", methods=["POST"])
 def start_session():
     data = request.json
@@ -48,12 +48,11 @@ def start_session():
     lecture = int(data["lecture"])
     teacher = data["teacher"]
 
-    if division == "A":
-        timetable = pd.read_excel("../excel_data/timetableA.xlsx")
-    elif division == "B":
-        timetable = pd.read_excel("../excel_data/timetableB.xlsx")
+    timetable_file = f"data/timetable{division}.xlsx"
+    if os.path.exists(timetable_file):
+        timetable = pd.read_excel(timetable_file)
     else:
-        timetable = pd.read_excel("../excel_data/timetableC.xlsx")
+        return jsonify({"status": "timetable_missing"})
 
     today = datetime.now().strftime("%A")
     lec = timetable[(timetable["Day"] == today) & (timetable["Lecture"] == lecture)]
@@ -80,7 +79,6 @@ def start_session():
 # -------------------------
 # STOP SESSION
 # -------------------------
-
 @app.route("/stop_session", methods=["POST"])
 def stop_session():
     SESSION.clear()
@@ -90,7 +88,6 @@ def stop_session():
 # -------------------------
 # STUDENT LOGIN
 # -------------------------
-
 @app.route("/student_login", methods=["POST"])
 def student_login():
     data = request.json
@@ -117,16 +114,17 @@ def student_login():
 # -------------------------
 # GENERATE QR
 # -------------------------
-
 @app.route("/generate_qr")
 def generate_qr():
     session_id = SESSION.get("session")
     if not session_id:
         return jsonify({"error": "session not started"})
 
-    url = f"http://127.0.0.1:5500/verify.html?session={session_id}"
-    img = qrcode.make(url)
+    # Replace with your deployed frontend URL
+    frontend_url = "https://YOUR_FRONTEND_URL"  
+    url = f"{frontend_url}/verify.html?session={session_id}"
 
+    img = qrcode.make(url)
     buffer = BytesIO()
     img.save(buffer)
     buffer.seek(0)
@@ -136,15 +134,12 @@ def generate_qr():
 # -------------------------
 # MARK ATTENDANCE
 # -------------------------
-
 @app.route("/mark_attendance", methods=["POST"])
 def mark_attendance():
     if "session" not in SESSION:
         return jsonify({"status": "attendance_closed"})
 
     data = request.json
-
-    # Ensure all required fields are sent
     name = data.get("name")
     roll = data.get("roll")
     division = data.get("division")
@@ -197,7 +192,6 @@ def mark_attendance():
 # -------------------------
 # VIEW ATTENDANCE BY DIVISION
 # -------------------------
-
 @app.route("/attendance_by_division")
 def attendance_by_division():
     division = request.args.get("division")
@@ -212,6 +206,5 @@ def attendance_by_division():
 # -------------------------
 # RUN SERVER
 # -------------------------
-
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True)
